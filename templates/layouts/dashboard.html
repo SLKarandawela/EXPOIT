@@ -1,0 +1,32 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block base_l_body %}
+    <div class="container_fluid">
+        <div class="card mb-3" style="border: none">
+            <div class="row g-0" id="dashboard_row">
+                <div class="col-md-2" id="dashboard_left_col">
+                <div class="row">
+                    <img src="{% static 'images/logo/exhibitIT.png' %}">
+                </div>
+                    {% block sideNav %}
+                    {% endblock %}
+                </div>
+                <div class="col-md-10" id="dashboard_right_col">
+                    <div class="card-body">
+                        {% block dashboard_content %}
+
+                        {% endblock %}
+
+                    </div>
+
+
+                </div>
+{#                <div class="page_footer">#}
+{#                    <div class="center_wrapper">#}
+{#                        <h6>All rights reserved</h6>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}

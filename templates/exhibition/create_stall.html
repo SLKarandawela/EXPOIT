@@ -1,0 +1,73 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}create Stall{% endblock %}
+{% block sideNav %}
+    {% include 'components/admin_sidenav.html' %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Create New Stall</h5>
+        <hr>
+
+        <form id="create_stall_form" method="POST">
+            {% csrf_token %}
+
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Exhibition</label>
+                <select class="form-select" aria-label="Default select example" name="stall_exhibition">
+
+                    <option value="">Select Exhibition</option>
+                    {% for exhibition in ALL_EXHIBITIONS %}
+                        <option value="{{ exhibition.id }}">{{ exhibition.exhibition_name }}</option>
+
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Stall Number</label>
+                <input type="text" class="form-control" id="exhibition_name_create" name="stall_num" value="{{ STALL_ID }}" readonly>
+
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Stall price</label>
+                <input type="text" class="form-control" id="exhibition_name_create" name="stall_price" placeholder="Stall price">
+
+            </div>
+
+
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">Banner upload</label>#}
+{#                <input class="form-control" type="file" id="stall_banner" name="stall_banner">#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">pdf upload</label>#}
+{#                                <input class="form-control" type="file" id="stall_pdf" name="stall_pdf">#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">Video upload</label>#}
+{#                <input class="form-control" type="file" id="stall_banner" name="stall_video">#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">Video upload</label>#}
+{#                <input class="form-control" type="file" id="stall_banner" name="stall_leaflet">#}
+{##}
+{#            </div>#}
+
+
+            <div class="center_wrapper">
+                <button type="submit" class="btn btn-primary global_button">Create stall</button>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

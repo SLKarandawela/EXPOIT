@@ -1,0 +1,52 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}All Exhibitions{% endblock %}
+{% block sideNav %}
+    {% include 'components/admin_sidenav.html' %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>exhibition List</h5>
+        <hr>
+
+        <table class="table-sm">
+            <thead>
+            <tr class="table-primary">
+
+                <th scope="col">Exhibition Name</th>
+                <th scope="col">Exhibition Category</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Ticket Price</th>
+                <th scope="col">Action</th>
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for info in ALL_EXHIBITIONS %}
+            <tr>
+
+                <td>{{ info.exhibition_name }}</td>
+                <td>{{ info.exhibition_category }}</td>
+                <td>{{ info.exhibition_start_date }}</td>
+                            <td>{{ info.exhibition_end_date }}</td>
+                <td>LKR:{{ info.exhibition_ticket_price|floatformat:2 }}</td>
+            <td>
+                <a href="{% url 'stall_list' info.id %}">
+                    <button type="button" class="btn btn-primary">View Stalls</button>
+                </a>
+            </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+:root {
+    --main-bg-color: #1061e4;
+}
+
+#auth_right_card{
+    background-color:var(--main-bg-color);
+    min-height: 100vh;
+}
+
+#auth_left_card{
+    padding: 3em;
+    max-height: 100vh;
+    overflow-y: auto;
+}
+
+#auth_image_container{
+    margin-top: 15em;
+}
+
+.auth_titles{
+    color: black;
+    font-weight: bold;
+}
+
+#exhibitor_signup_form{
+    margin-top: 3em;
+}
+
+#sign_in_form{
+    margin-top: 3em;
+}

@@ -1,0 +1,254 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}Purchase Stall{% endblock %}
+{% block sideNav %}
+    {% include 'components/admin_sidenav.html' %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Purchase New Stall</h5>
+        <hr>
+
+        <form id="purchase_stall_form" method="POST">
+            {% csrf_token %}
+            <input type="text" value="{{ STALL_ID }}" id="selected_stall" hidden>
+            <input type="text"  id="banner_payment" name="banner_total" hidden>
+            <input type="text"  id="video_payment" name="video_total" hidden>
+            <input type="text"  id="leaflet_payment" name="leaflet_total" hidden>
+            <input type="text"  id="model_payment" name="model_total" hidden>
+            <input type="text"  id="pdf_payment" name="pdf_total" hidden>
+            <input type="text"  id="vid_conf_payment" name="conf_total" hidden>
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Stall Sub Total</label>
+                <input type="text" class="form-control" id="exhibition_sum_pay" name="stall_custom_price" placeholder="Stall price" readonly>
+
+            </div>
+
+            <hr>
+
+            <h6>Customize your stall</h6>
+
+            <br>
+
+
+            {#banner upload#}
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Select no of banners</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="bannerOptions" id="one_banner" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="bannerOptions" id="two_banners" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="bannerOptions" id="three_banners" value="3">
+                            <label class="form-check-label" for="inlineRadio3">3</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Banner upload</label>
+                        <input class="form-control" type="file" id="stall_banner" name="stall_banner" multiple>
+                        <h6 class="error_msg" id="banner_error">*Image Limit Exceeded</h6>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            {#video upload#}
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Select no of Videos</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="videoOptions" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="videoOptions" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Video upload</label>
+                        <input class="form-control" type="file" id="stall_video" name="stall_video" multiple>
+                        <h6 class="error_msg" id="video_error">*Video Limit Exceeded</h6>
+
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            {#modal availability#}
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Do you have a model?</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="modalAvailableOptions" id="inlineRadio1" value="True">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="modalAvailableOptions" id="inlineRadio2" value="False">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-8">
+
+                    <div class="row">
+                        <div class="col" id="upload_model">
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label form_label_styler">Upload model</label>
+                                <input class="form-control" type="file" id="stall_video" name="stall_model">
+                            </div>
+
+                        </div>
+                        <div class="col" id="generate_model">
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label form_label_styler">Generate Model</label>
+                                <br>
+                                <a href="{% url 'stall_modal_creation' STALL_ID %}">
+
+                                </a>
+                                <button type="button" class="btn btn-primary">Generate Model</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+            <br>
+
+            {#leaflet upload#}
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Select no of leaflets</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="leafletOptions" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="leafletOptions" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">2</label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Leaflet upload</label>
+                        <input class="form-control" type="file" id="stall_leaflet" name="stall_leaflet" multiple>
+                        <h6 class="error_msg" id="leaflet_error">*Leaflet limit exceeded</h6>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            {#information sheet availability#}
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Do you have a Information sheet?</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="informationSheetAvailableOptions" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="informationSheetAvailableOptions" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-8" id="infoemation_sheet_av">
+
+
+
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Upload Information Sheet</label>
+                        <input class="form-control" type="file" id="information_sheet" name="stall_information_sheet">
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+            <br>
+
+            {#            video conferencing availability#}
+            <div class="row">
+                <div class="col-4">
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label form_label_styler">Do you need to video conferencing?</label>
+                        <br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="videoConferencingAvailableOptions" id="inlineRadio1" value="1">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="videoConferencingAvailableOptions" id="inlineRadio2" value="2">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+            <div class="center_wrapper">
+                <button type="submit" class="btn btn-primary global_button">Submit and pay</button>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

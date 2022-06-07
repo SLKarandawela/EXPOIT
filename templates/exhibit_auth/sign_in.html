@@ -1,0 +1,38 @@
+{% extends 'layouts/authLayout.html' %}
+{% block page_title %}Sign in{% endblock %}
+{% block auth_left_col %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <h2 class="auth_titles">Let's Explore</h2>
+            <h2 class="auth_titles">Sign in</h2>
+            <form id="sign_in_form" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" name="userName" placeholder="Enter your username">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label form_label_styler">Password</label>
+                    <input type="password" class="form-control" name="userPassword" placeholder="Enter your password">
+                </div>
+
+                <div class="center_wrapper">
+                    <button type="submit" class="btn btn-primary global_button">sign in</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="center_wrapper">
+                <h6>Don't have an account? <a href="{% url 'reg_as_visitor' %}"> Sign up </a></h6>
+            </div>
+        </div>
+
+    </div>
+
+
+
+{% endblock %}

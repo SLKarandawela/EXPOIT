@@ -1,0 +1,59 @@
+{% extends 'layouts/authLayout.html' %}
+{% block page_title %}Sign up - Exhibitor{% endblock %}
+{% block auth_left_col %}
+    <div class="container-fluid">
+
+
+
+    <h2 class="auth_titles">Want to be a Exhibitor?</h2>
+        <h2 class="auth_titles">Sign Up here</h2>
+        <div class="row">
+            <form id="exhibitor_signup_form" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Pick a username</label>
+                    <input type="text" class="form-control" id="exhibitor_company" name="exhibitor_username" placeholder="Your username">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Pick a password</label>
+                    <input type="password" class="form-control" id="exhibitor_company" name="exhibitor_password" placeholder="Your password">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">confirm password</label>
+                    <input type="text" class="form-control" id="exhibitor_company" name="exhibitor_pwd_recheck" placeholder="reenter your password">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Company Name</label>
+                    <input type="text" class="form-control" id="exhibitor_company" name="exhibitor_company" placeholder="Your company">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Email Address</label>
+                    <input type="text" class="form-control" id="exhibitor_company" name="exhibitor_email" placeholder="Your email">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label form_label_styler">Permanent Address</label>
+                    <textarea class="form-control" id="exhibitor_address" name="exhibitor_address" placeholder="your address" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label form_label_styler">Contact Number</label>
+                    <input type="text" class="form-control" id="exhibitor_contact_number" name="exhibitor_contact_number" placeholder="Your contact number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                </div>
+
+
+                <div class="center_wrapper">
+                    <button type="submit" class="btn btn-primary global_button">Register</button>
+                </div>
+            </form>
+        </div>
+
+        <br>
+
+        <div class="center_wrapper">
+            <div class="row">
+                <h6>Already have an account? <a href="{% url 'exhibition_login' %}"> Sign in </a></h6>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

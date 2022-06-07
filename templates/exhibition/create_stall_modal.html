@@ -1,0 +1,57 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}create Stall Modal{% endblock %}
+{% block sideNav %}
+    {% include 'components/admin_sidenav.html' %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Create New Stall Modal</h5>
+        <hr>
+
+        <form id="create_stall_modal_form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Stall images for modal creation</label>
+                <input class="form-control" type="file" id="stall_modal_image_upload" name="stall_modal_image" multiple>
+{#                <input type="text" class="form-control" id="exhibition_name_create" name="stall_modal_image" placeholder="Stall price">#}
+
+            </div>
+
+
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">Banner upload</label>#}
+{#                <input class="form-control" type="file" id="stall_banner" name="stall_banner">#}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">pdf upload</label>#}
+{#                                <input class="form-control" type="file" id="stall_pdf" name="stall_pdf">#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">Video upload</label>#}
+{#                <input class="form-control" type="file" id="stall_banner" name="stall_video">#}
+{##}
+{#            </div>#}
+{##}
+{#            <div class="mb-3">#}
+{#                <label for="exampleInputPassword1" class="form-label form_label_styler">Video upload</label>#}
+{#                <input class="form-control" type="file" id="stall_banner" name="stall_leaflet">#}
+{##}
+{#            </div>#}
+
+
+            <div class="center_wrapper">
+                <button type="submit" class="btn btn-primary global_button">Upload images</button>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

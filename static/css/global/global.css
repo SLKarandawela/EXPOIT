@@ -1,0 +1,56 @@
+:root {
+    --main-bg-color: #1061e4;
+}
+
+.page_footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+.errors{
+    color: red;
+}
+
+.global_button{
+    width: 15em;
+    font-weight: bold;
+    background-color: var(--main-bg-color);
+    color: whitesmoke;
+    border-radius: 3em;
+}
+
+.center_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_label_styler{
+    font-size: 0.9em;
+    color: black;
+    font-weight: bold;
+}
+
+#dashboard_row{
+    min-height: 100vh;
+}
+
+#dashboard_left_col{
+    background-color: var(--main-bg-color);
+}
+
+.body_card{
+    padding: 4em;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    border: none;
+}
+
+.error_msg{
+    color: red;
+    font-weight: normal;
+    margin-top: 0.3em;
+}

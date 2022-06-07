@@ -1,0 +1,42 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}All Stalls{% endblock %}
+{% block sideNav %}
+    {% include 'components/admin_sidenav.html' %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Stall List</h5>
+        <hr>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for stall in STALL_LIST %}
+                <div class="col">
+                    <div class="card h-100">
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ stall.stall_number}}</h5>
+                            <br>
+                            <h5 class="card-title">LKR:{{ stall.stall_price|floatformat:2}}</h5>
+
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'stall_modal_creation' stall.id %}">
+                                <button type="button" class="btn btn-primary">Create Model</button>
+                            </a>
+
+                            <a href="{% url 'buy_and_customize_stall' stall.id %}">
+                                <button type="button" class="btn btn-primary">Purchase Stall</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'layouts/authLayout.html' %}
+{% block page_title %}Sign up - Visitor{% endblock %}
+{% block auth_left_col %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <h6>Want to become a Exhibitor?<a href="{% url 'reg_as_exhibitor' %}">Register as a Exhibitor</a></h6>
+        </div>
+
+        <div class="row">
+            <form>
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Full Name</label>
+                    <input type="text" class="form-control" id="visitor_register_name" name="visitor_register_name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label form_label_styler">Email Address</label>
+                    <input type="email" class="form-control" id="visitor_register_email" name="visitor_register_email">
+                </div>
+
+
+                <div class="center_wrapper">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="center_wrapper">
+            <div class="row">
+            <h6>Already have an account? <a href="{% url 'exhibition_login' %}"> Sign in </a></h6>
+        </div>
+        </div>
+
+
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block base_l_body %}
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-6" id="auth_left_card">
+                {% block auth_left_col %}
+
+                {% endblock %}
+            </div>
+
+            <div class="col-md-6" id="auth_right_card">
+
+                <div class="container-fluid center_wrapper" id="auth_image_container">
+                    <img src="{% static 'images/logo/exhibitIT.png' %}" width="500em">
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}create exhibition{% endblock %}
+{% block sideNav %}
+    {% include 'components/admin_sidenav.html' %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Create New Exhibition</h5>
+    <hr>
+
+        <form id="create_exhibition_form" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Exhibition Name</label>
+                <input type="text" class="form-control" id="exhibition_name_create" name="exhibition_name_create" placeholder="Exhibition Name">
+
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label form_label_styler">Exhibition Type</label>
+                <select class="form-select" aria-label="Default select example" name="exhibition_type">
+                    <option value="">Select Exhibition Type</option>
+                    {% for type in EXHIBITION_TYPE %}
+                        <option value="{{ type.id }}">{{ type.exhibition_category_name }}</option>
+
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label form_label_styler">Exhibition Start Date</label>
+                <input type="date" class="form-control" id="exhibition_start_date" name="exhibition_start_date">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label form_label_styler">Exhibition End Date</label>
+                <input type="date" class="form-control" id="exhibition_end_date" name="exhibition_end_date">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label form_label_styler">Exhibition Ticket Price </label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Rs</span>
+                    <input type="text" class="form-control" placeholder="Ticket price" name="exhibition_amount">
+
+                </div>
+            </div>
+            <div class="center_wrapper">
+                <button type="submit" class="btn btn-primary global_button">Create exhibition</button>
+
+            </div>
+        </form>
+    </div>
+
+{% endblock %}
