@@ -1,7 +1,20 @@
 {% extends 'layouts/dashboard.html' %}
 {% block page_title %}All Exhibitions{% endblock %}
 {% block sideNav %}
-    {% include 'components/admin_sidenav.html' %}
+      {% if LOGGED_GROUP == 'EXHIBITOR' %}
+
+            {% include 'components/exhibitor_sidenav.html' %}
+
+
+    {% elif LOGGED_GROUP == 'VISITOR' %}
+
+        {% include 'components/visitor_sidenav.html' %}
+
+
+    {% else%}
+            {% include 'components/admin_sidenav.html' %}
+
+    {% endif %}
 {% endblock %}
 
 {% block dashboard_content %}

@@ -30,6 +30,7 @@ class ExhibitionStall(models.Model):
     stall_number = models.CharField(max_length=20)
     stall_price = models.FloatField()
     stall_status = models.IntegerField(default=0)
+    stall_reserved_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
 
     def __str__(self):
         return self.stall_number
@@ -39,6 +40,9 @@ class ExhibitionStall(models.Model):
 class CustomStall(models.Model):
     customized_stall = models.ForeignKey(ExhibitionStall, on_delete=models.DO_NOTHING)
     customized_name = models.CharField(max_length=100)
+    stall_customized_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)
+
+
 
     def __str__(self):
         return self.customized_name

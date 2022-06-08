@@ -1,7 +1,20 @@
 {% extends 'layouts/dashboard.html' %}
 {% block page_title %}Purchase Stall{% endblock %}
 {% block sideNav %}
-    {% include 'components/admin_sidenav.html' %}
+    {% if LOGGED_GROUP == 'EXHIBITOR' %}
+
+        {% include 'components/exhibitor_sidenav.html' %}
+
+
+    {% elif LOGGED_GROUP == 'VISITOR' %}
+
+        {% include 'components/visitor_sidenav.html' %}
+
+
+    {% else%}
+        {% include 'components/admin_sidenav.html' %}
+
+    {% endif %}
 {% endblock %}
 
 {% block dashboard_content %}
@@ -10,7 +23,7 @@
         <h5>Purchase New Stall</h5>
         <hr>
 
-        <form id="purchase_stall_form" method="POST">
+        <form id="purchase_stall_form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="text" value="{{ STALL_ID }}" id="selected_stall" hidden>
             <input type="text"  id="banner_payment" name="banner_total" hidden>
@@ -128,7 +141,12 @@
                         <div class="col" id="upload_model">
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label form_label_styler">Upload model</label>
-                                <input class="form-control" type="file" id="stall_video" name="stall_model">
+                                <input class="form-control" type="file" id="stall_modal" name="stall_model">
+                            </div>
+                            <div class="button_section">
+                                <a href="">
+                                    <button type="button" id="blah" class="btn btn-primary">Primary</button>
+                                </a>
                             </div>
 
                         </div>
@@ -137,9 +155,8 @@
                                 <label for="exampleInputPassword1" class="form-label form_label_styler">Generate Model</label>
                                 <br>
                                 <a href="{% url 'stall_modal_creation' STALL_ID %}">
-
+                                    <button type="button" class="btn btn-primary">Generate Model</button>
                                 </a>
-                                <button type="button" class="btn btn-primary">Generate Model</button>
                             </div>
                         </div>
                     </div>
@@ -244,11 +261,73 @@
 
 
 
-            <div class="center_wrapper">
-                <button type="submit" class="btn btn-primary global_button">Submit and pay</button>
+            <div class="row">
+                <div class="col-8">
+                    <div id="paypal-button-container"></div>
+
+                    <!-- Include the PayPal JavaScript SDK -->
+                    <script src="https://www.paypal.com/sdk/js?client-id=Aebj4mBPnWS8nXuf2vq9ix8OqvNurpQm7rrri17YzdeZPAvl04Tf_C5soL6GonOp26D-w8Bfm1gG4tqd&currency=USD"></script>
+
+
+                    <script>
+                        // Render the PayPal button into #paypal-button-container
+                        paypal.Buttons({
+
+                            // Set up the transaction
+                            createOrder: function(data, actions) {
+                                return actions.order.create({
+                                    purchase_units: [{
+                                        amount: {
+                                            value: '100'
+                                        }
+                                    }]
+                                });
+                            },
+
+                            // Finalize the transaction
+                            onApprove: function(data, actions) {
+                                return actions.order.capture().then(function(orderData) {
+                                    // Successful capture! For demo purposes:
+                                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                    var transaction = orderData.purchase_units[0].payments.captures[0];
+                                    alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                                    // Replace the above to show a success message within this page, e.g.
+                                    // const element = document.getElementById('paypal-button-container');
+                                    // element.innerHTML = '';
+                                    // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                                    // Or go to another URL:  actions.redirect('thank_you.html');
+                                });
+                            }
+
+
+                        }).render('#paypal-button-container');
+                    </script>
+                </div>
+                <div class="col-4">
+                    <br><br>
+                    <div class="center_wrapper">
+                        <button type="submit" class="btn btn-primary global_button" id="submit_and_pay_btn">Save Stall Data</button>
+
+                    </div>
+
+                </div>
+
+
 
             </div>
+
+            <br>
+
+
+
+
+
         </form>
     </div>
+
+    <script>
+
+    </script>
 
 {% endblock %}

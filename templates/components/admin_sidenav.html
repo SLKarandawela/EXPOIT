@@ -103,62 +103,40 @@
 
     </li>
 
-    {#user approval section#}
-{#    <li class="list-group-item" id="list-group-item">#}
-{#        <a data-bs-toggle="collapse" href="#collapseExample4"  aria-expanded="false" aria-controls="collapseExample" class="nav_link_custom"><i class="fa-solid fa-user-check"></i>  User Approvals <i class="fa-solid fa-caret-down"></i></a>#}
-{##}
-{##}
-{#        <div class="collapse" id="collapseExample4" id="list-group-item">#}
-{#            <ul class="list-group list-group-flush">#}
-{#                <li class="list-group-item" id="list-group-item">#}
-{#                    <a href="" class="nav_link_custom"><i class="fa-solid fa-user"></i> Approve a Player</a>#}
-{##}
-{#                </li>#}
-{#                <li class="list-group-item" id="list-group-item">#}
-{#                    <a href="" class="nav_link_custom"><i class="fa-solid fa-user-tie"></i> Approve a Guardian</a>#}
-{##}
-{#                </li>#}
-{##}
-{#                <li class="list-group-item" id="list-group-item">#}
-{#                    <a href="" class="nav_link_custom"><i class="fa-solid fa-user-secret"></i> Approve a Coach</a>#}
-{##}
-{#                </li>#}
-{##}
-{##}
-{#            </ul>#}
-{#        </div>#}
-{##}
-{##}
-{##}
-{#    </li>#}
-{##}
-    {#    super coach section#}
-{#    <li class="list-group-item" id="list-group-item">#}
-{#        <a data-bs-toggle="collapse" href="#collapseExample9"  aria-expanded="false" aria-controls="collapseExample" class="nav_link_custom"><i class="fa-solid fa-user"></i>  Payments <i class="fa-solid fa-caret-down"></i></a>#}
-{##}
-{##}
-{#        <div class="collapse" id="collapseExample9">#}
-{#            <ul class="list-group list-group-flush">#}
-{#                <li class="list-group-item" id="list-group-item">#}
-{#                    <a href="" class="nav_link_custom"><i class="fa-solid fa-user-plus"></i>Submitted Records</a>#}
-{##}
-{#                </li>#}
-{#                <li class="list-group-item" id="list-group-item">#}
-{#                    <a href="" class="nav_link_custom"><i class="fa-solid fa-users"></i> Payment Portal</a>#}
-{##}
-{#                </li>#}
-{##}
-{##}
-{#            </ul>#}
-{#        </div>#}
-{##}
-{##}
-{##}
-{#    </li>#}
-{##}
+    <li class="list-group-item" id="list-group-item">
+        <a data-bs-toggle="collapse" href="#collapseExample10"  aria-expanded="false" aria-controls="collapseExample" class="nav_link_custom"><i class="fa-solid fa-user"></i> User <i class="fa-solid fa-caret-down"></i></a>
+
+
+        <div class="collapse" id="collapseExample10">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" id="list-group-item">
+                    <a href="{% url 'exhibitor_list' %}" class="nav_link_custom"><i class="fa-solid fa-users-rays"></i> Exhibitors</a>
+
+                </li>
+                <li class="list-group-item" id="list-group-item">
+                    <a href="{% url 'visitor_list' %}" class="nav_link_custom"><i class="fa-solid fa-users-viewfinder"></i> Visitors</a>
+
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    {#    payments#}
+    <li class="list-group-item" id="list-group-item">
+        <a data-bs-toggle="collapse" href="#collapseExample11"  aria-expanded="false" aria-controls="collapseExample" class="nav_link_custom"><i class="fa-solid fa-coins"></i> My Payments <i class="fa-solid fa-caret-down"></i></a>
+
+
+        <div class="collapse" id="collapseExample11">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" id="list-group-item">
+                    <a href="{% url 'payment_list' %}" class="nav_link_custom"><i class="fa-solid fa-wallet"></i>Payments Recieved</a>
+
+                </li>
+            </ul>
+        </div>
 
 
 
-
+    </li>
 </ul>
 

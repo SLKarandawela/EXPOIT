@@ -1,0 +1,52 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}All Visitors{% endblock %}
+{% block sideNav %}
+ {% if LOGGED_GROUP == 'EXHIBITOR' %}
+
+            {% include 'components/exhibitor_sidenav.html' %}
+
+
+    {% elif LOGGED_GROUP == 'VISITOR' %}
+
+        {% include 'components/visitor_sidenav.html' %}
+
+
+    {% else%}
+            {% include 'components/admin_sidenav.html' %}
+
+    {% endif %}{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Visitor Users</h5>
+        <hr>
+
+        <table class="table-sm">
+            <thead>
+            <tr class="table-primary">
+
+                <th scope="col">Visitor Name</th>
+                <th scope="col">Visitor Email</th>
+
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for info in ALL_VISITORS %}
+                <tr>
+                    <td>{{ info.visitor_name }}</td>
+                    <td>{{ info.visitor_user.email }}</td>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+{% endblock %}

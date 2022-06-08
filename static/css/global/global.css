@@ -42,7 +42,9 @@
 }
 
 .body_card{
-    padding: 4em;
+    padding-left: 4em;
+    padding-bottom: 4em;
+    padding-right: 4em;
     min-height: 100vh;
     max-height: 100vh;
     overflow-y: auto;
@@ -53,4 +55,16 @@
     color: red;
     font-weight: normal;
     margin-top: 0.3em;
+}
+
+.nav_link{
+    text-decoration: none;
+}
+
+.nav_link:hover{
+    color: red;
+}
+
+.index_card:hover{
+    transform: scale(1.07);
 }

@@ -1,0 +1,100 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+    {#.list-group{#}
+    {#    margin-top: 3em;#}
+    {#}#}
+
+    #ul_class_coach{
+        margin-top: 2em
+    }
+
+
+    #list-group-item{
+        background-color: #1061e4;
+        padding-bottom: 1em;
+        margin-top: 1em;
+        border-color: rgb(250, 249, 246,0.3);
+
+
+    }
+
+    .nav_link_custom{
+        color: whitesmoke;
+        text-decoration: none;
+        font-size: 1em;
+        font-family: 'PT Sans', sans-serif;
+    }
+
+    .nav_link_custom:hover{
+        color: orangered;
+    }
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul class="list-group list-group-flush" id="ul_class_coach">
+
+    {#    <div class="nav_wrapper">#}
+    {#    home page#}
+    <li class="list-group-item" id="list-group-item">
+        <a href="" class="nav_link_custom"><i class="fa-solid fa-house"></i> Home page</a>
+
+
+    </li>
+
+
+    {#player section#}
+    <li class="list-group-item" id="list-group-item">
+        <a data-bs-toggle="collapse" href="#collapseExample"  aria-expanded="false" aria-controls="collapseExample" class="nav_link_custom"><i class="fa-solid fa-building"></i>  Exhibition <i class="fa-solid fa-caret-down"></i></a>
+
+
+        <div class="collapse" id="collapseExample">
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item" id="list-group-item">
+                    <a href="{% url 'all_exhibitions' %}" class="nav_link_custom"><i class="fa-solid fa-building-flag"></i> Exhibition List</a>
+
+                </li>
+
+
+            </ul>
+        </div>
+
+         <li class="list-group-item" id="list-group-item">
+        <a data-bs-toggle="collapse" href="#collapseExample10"  aria-expanded="false" aria-controls="collapseExample" class="nav_link_custom"><i class="fa-solid fa-coins"></i> My Payments <i class="fa-solid fa-caret-down"></i></a>
+
+
+        <div class="collapse" id="collapseExample10">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" id="list-group-item">
+                    <a href="{% url 'my_payments' %}" class="nav_link_custom"><i class="fa-solid fa-wallet"></i> View Payments</a>
+
+                </li>
+            </ul>
+        </div>
+
+
+
+    </li>
+
+
+
+    </li>
+
+
+
+
+
+</ul>
+

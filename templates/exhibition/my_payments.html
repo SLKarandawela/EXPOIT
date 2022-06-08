@@ -1,0 +1,78 @@
+{% extends 'layouts/dashboard.html' %}
+{% load static %}
+%}
+{% block page_title %}My Payments{% endblock %}
+{% block sideNav %}
+      {% if LOGGED_GROUP == 'EXHIBITOR' %}
+
+            {% include 'components/exhibitor_sidenav.html' %}
+
+
+    {% elif LOGGED_GROUP == 'VISITOR' %}
+
+        {% include 'components/visitor_sidenav.html' %}
+
+
+    {% else%}
+            {% include 'components/admin_sidenav.html' %}
+
+    {% endif %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>Ny Payments</h5>
+        <hr>
+
+        <table class="table-sm">
+            <thead>
+            <tr class="table-primary">
+
+                <th scope="col">Exhibition Name</th>
+                <th scope="col">Stall Name</th>
+                <th scope="col">Banner</th>
+                <th scope="col">Video</th>
+                <th scope="col">Model</th>
+                <th scope="col">Leaflet</th>
+                <th scope="col">Pdf</th>
+                <th scope="col">Conferencing</th>
+                <th scope="col">Total</th>
+                <th scope="col">Payment Date</th>
+
+
+
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for info in MY_PAYMENTS %}
+                <tr>
+
+                    <td>{{ info.stall_payment_exhibition }}</td>
+                    <td>{{ info.stall_payment_exhibition_stall }}</td>
+                    <td>{{ info.stall_payment_banner|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_video|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_model|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_leaflet|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_pdf|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_video_conf|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_total_amount|floatformat:2 }}</td>
+                    <td>{{ info.stall_payment_date}}</td>
+
+
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+{% endblock %}

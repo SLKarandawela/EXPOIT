@@ -8,6 +8,10 @@ from Exhibition.models import *
 
 # exhibition creation details
 def create_new_exhibition(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
     exhibition_types = ExhibitionCategory.objects.all()
     if request.method == "POST":
         exhibition_name = request.POST.get('exhibition_name_create')
@@ -32,26 +36,38 @@ def create_new_exhibition(request):
         new_exhibition.save()
 
     context = {
-        "EXHIBITION_TYPE": exhibition_types
+        "EXHIBITION_TYPE": exhibition_types,
+        'LOGGED_GROUP': logged_group,
+
     }
     return render(request, 'exhibition/create_exhibition.html', context)
 
 
 # created exhibition list
 def exhibition_list(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
     try:
         all_exhibitions = Exhibition.objects.all()
     except:
         print("exhibition matching query didn't found")
 
     context = {
-        "ALL_EXHIBITIONS": all_exhibitions
+        "ALL_EXHIBITIONS": all_exhibitions,
+        'LOGGED_GROUP': logged_group,
+
     }
 
     return render(request, 'exhibition/all_exhibitions.html', context)
 
 
 def create_stall(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
     if not ExhibitionStall.objects.exists():
         stall_id = 'S' + str(1).zfill(3)
     else:
@@ -82,18 +98,24 @@ def create_stall(request):
             stall_exhibition=related_exhibition_object,
             stall_number=stall_no,
             stall_price=stall_amount,
+            stall_reserved_by=request.user
         )
 
         new_exhibition_stall.save()
 
     context = {
         "STALL_ID": stall_id,
-        "ALL_EXHIBITIONS": all_exhibitions
+        "ALL_EXHIBITIONS": all_exhibitions,
+        'LOGGED_GROUP': logged_group,
     }
     return render(request, 'exhibition/create_stall.html', context)
 
 
 def all_stalls(request, pk):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
     # all stalls for given exhibition
     try:
         stall_list = ExhibitionStall.objects.filter(stall_exhibition__id=pk)
@@ -101,13 +123,41 @@ def all_stalls(request, pk):
         print("stalls are not found")
 
     context = {
-        "STALL_LIST": stall_list
+        "STALL_LIST": stall_list,
+        'LOGGED_GROUP': logged_group,
     }
     return render(request, 'exhibition/all_stalls.html', context)
+
+def my_stalls(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+    # all stalls for given exhibition
+    print(request.user)
+    try:
+        my_stall_list = ExhibitionStall.objects.filter(stall_reserved_by=request.user)
+        print(my_stall_list)
+        # my_stall_list = my_payments
+        # print(my_stall_list.)
+
+    except:
+        print("stalls are not found")
+
+    context = {
+        "MY_STALL_LIST": my_stall_list,
+        'LOGGED_GROUP': logged_group,
+    }
+    return render(request, 'exhibition/my_stalls.html', context)
 
 
 # image upload for stalls
 def stall_image_uploading(request, pk):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+
     if request.method == "POST":
         uploaded_list = []
         fss = FileSystemStorage()
@@ -120,10 +170,19 @@ def stall_image_uploading(request, pk):
             print(file_url)
         print("This is list list ", uploaded_list)
 
-    return render(request, 'exhibition/create_stall_modal.html')
+    context = {
+        'LOGGED_GROUP': logged_group,
+    }
+
+    return render(request, 'exhibition/create_stall_modal.html', context)
 
 
 def purchase_stall(request, pk):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+
     try:
         purchasing_stall = ExhibitionStall.objects.get(id=pk)
     except:
@@ -152,21 +211,25 @@ def purchase_stall(request, pk):
             stall_payment_video_conf=tot_video_con,
             stall_payment_total_amount=tot_sum
 
-
         )
 
         new_stall_payment.save()
         new_stall_payment.stall_payment_exhibition_stall.stall_status = 1
         new_stall_payment.stall_payment_exhibition_stall.save()
 
+        purchasing_stall.stall_reserved_by = request.user
+        purchasing_stall.save()
+
         fss = FileSystemStorage()
         banner_list = request.FILES.getlist('stall_banner')
+        print("this is banner list", banner_list)
         if banner_list:
             for banner in banner_list:
                 file = fss.save(banner.name, banner)
                 file_url = fss.url(file)
-                print("This is file url",file_url)
-                new_stall_banner=  StallBanner(
+                file_url = file_url.split('/')[-1]
+                print("This is file url", file_url)
+                new_stall_banner = StallBanner(
                     stall_banner_stall=purchasing_stall,
                     stall_banner_img=file_url
                 )
@@ -177,6 +240,7 @@ def purchase_stall(request, pk):
             for video in video_list:
                 file = fss.save(video.name, video)
                 file_url = fss.url(file)
+                file_url = file_url.split('/')[-1]
                 new_stall_video = StallVideo(
                     stall_video_stall=purchasing_stall,
                     stall_video=file_url
@@ -188,6 +252,7 @@ def purchase_stall(request, pk):
             for leaflet in leaflet_list:
                 file = fss.save(leaflet.name, leaflet)
                 file_url = fss.url(file)
+                file_url = file_url.split('/')[-1]
                 new_stall_leaflet = StallLeaflet(
                     stall_leaflet_stall=purchasing_stall,
                     stall_leaflet_img=file_url
@@ -198,6 +263,7 @@ def purchase_stall(request, pk):
             stall_pdf = request.FILES.get('stall_information_sheet')
             file = fss.save(stall_pdf.name, stall_pdf)
             file_url = fss.url(file)
+            file_url = file_url.split('/')[-1]
 
             new_stall_pdf = StallPdf(
                 stall_pdf_stall=purchasing_stall,
@@ -210,7 +276,7 @@ def purchase_stall(request, pk):
             stall_3d_model = request.FILES.get('stall_model')
             file = fss.save(stall_3d_model.name, stall_3d_model)
             file_url = fss.url(file)
-
+            file_url = file_url.split('/')[-1]
             new_stall_model = StallModel(
                 stall_lmodel_stall=purchasing_stall,
                 stall_model=file_url
@@ -218,8 +284,12 @@ def purchase_stall(request, pk):
 
             new_stall_model.save()
 
+
+
     context = {
-        "STALL_ID": purchasing_stall.id
+        "STALL_ID": purchasing_stall.id,
+        'LOGGED_GROUP': logged_group,
+
     }
     return render(request, 'exhibition/create_stall_purchase.html', context)
 
@@ -241,8 +311,6 @@ def calculate_stall_payment(request):
     leaflet_count = request.GET.get('no_of_leaflets')
     video_conf_count = request.GET.get('video_con')
     tot = 0
-
-
 
     if banner_count:
         banner_cost = 10 * int(banner_count)
@@ -281,11 +349,43 @@ def calculate_stall_payment(request):
 
     return JsonResponse(
         {'Total_Cost': tot,
-         'Banner_Cost':banner_cost,
-         'VideoCost':video_cost,
-         'ModelCost':model_cost,
-         'PdfCost':pdf_cost,
-         'LeafletCost':leaflet_cost,
-         'VconCost':vcon_cost
+         'Banner_Cost': banner_cost,
+         'VideoCost': video_cost,
+         'ModelCost': model_cost,
+         'PdfCost': pdf_cost,
+         'LeafletCost': leaflet_cost,
+         'VconCost': vcon_cost
 
          })
+
+
+# all payments
+def all_payments(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+    all_received_payments = StallPayments.objects.all()
+    context = {
+        "ALL_PAY": all_received_payments,
+        'LOGGED_GROUP': logged_group,
+
+    }
+    return render(request, 'exhibition/all_payments.html', context)
+
+
+def user_defined_payments(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+    logged_user_payments = StallPayments.objects.filter(stall_payment_user=request.user)
+
+    context = {
+
+        'MY_PAYMENTS': logged_user_payments,
+        'LOGGED_GROUP': logged_group,
+
+    }
+
+    return render(request, 'exhibition/my_payments.html', context)

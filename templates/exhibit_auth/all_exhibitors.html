@@ -1,0 +1,59 @@
+{% extends 'layouts/dashboard.html' %}
+{% block page_title %}All Exhibitors{% endblock %}
+{% block sideNav %}
+    {% if LOGGED_GROUP == 'EXHIBITOR' %}
+
+            {% include 'components/exhibitor_sidenav.html' %}
+
+
+    {% elif LOGGED_GROUP == 'VISITOR' %}
+
+        {% include 'components/visitor_sidenav.html' %}
+
+
+    {% else%}
+            {% include 'components/admin_sidenav.html' %}
+
+    {% endif %}
+{% endblock %}
+
+{% block dashboard_content %}
+
+    <div class="card body_card">
+        <h5>exhibitor Users</h5>
+        <hr>
+
+        <table class="table-sm">
+            <thead>
+            <tr class="table-primary">
+
+                <th scope="col">Exhibitor Company</th>
+                <th scope="col">Exhibitor Email</th>
+                <th scope="col">Start Address</th>
+                <th scope="col">End Mobile Number</th>
+
+
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for info in ALL_EXHIBITORS %}
+                <tr>
+
+                    <td>{{ info.exhibitor_company_name }}</td>
+                    <td>{{ info.exhibitor_user.email }}</td>
+                    <td>{{ info.exhibitor_address }}</td>
+                    <td>{{ info.exhibitor_mobile_number }}</td>
+
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+{% endblock %}

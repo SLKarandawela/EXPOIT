@@ -1,8 +1,22 @@
 {% extends 'layouts/dashboard.html' %}
+{% load static %}
+%}
 {% block page_title %}All Stalls{% endblock %}
 {% block sideNav %}
-    {% include 'components/admin_sidenav.html' %}
-{% endblock %}
+    {% if LOGGED_GROUP == 'EXHIBITOR' %}
+
+        {% include 'components/exhibitor_sidenav.html' %}
+
+
+    {% elif LOGGED_GROUP == 'VISITOR' %}
+
+        {% include 'components/visitor_sidenav.html' %}
+
+
+    {% else%}
+        {% include 'components/admin_sidenav.html' %}
+
+    {% endif %}{% endblock %}
 
 {% block dashboard_content %}
 
@@ -14,22 +28,36 @@
             {% for stall in STALL_LIST %}
                 <div class="col">
                     <div class="card h-100">
-
+                        <img src="{% static 'images/background/stall_sample.png'%}" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">{{ stall.stall_number}}</h5>
+                            <h5 class="card-title" style="text-align: center">
+                                Stall Number - <span class="badge rounded-pill bg-dark">{{ stall.stall_number}}</span>
+                            </h5>
                             <br>
-                            <h5 class="card-title">LKR:{{ stall.stall_price|floatformat:2}}</h5>
+                            <h6 class="card-title" style="text-align: center">
+                                LKR:{{ stall.stall_price|floatformat:2}}
+                            </h6>
 
                         </div>
-                        <div class="card-footer">
-                            <a href="{% url 'stall_modal_creation' stall.id %}">
-                                <button type="button" class="btn btn-primary">Create Model</button>
-                            </a>
+                        {% if stall.stall_status == 0 %}
+                            <div class="card-footer">
 
-                            <a href="{% url 'buy_and_customize_stall' stall.id %}">
-                                <button type="button" class="btn btn-primary">Purchase Stall</button>
-                            </a>
-                        </div>
+
+                                <a href="{% url 'buy_and_customize_stall' stall.id %}" class="center_wrapper">
+                                    <button type="button" class="btn btn-primary global_button">Purchase Stall</button>
+                                </a>
+
+
+
+                            </div>
+                        {% endif %}
+                        {% if stall.stall_status == 1 %}
+                            <div class="card-footer" style="background-color: #ff6961;min-height: 3em ">
+                            <h6 style="text-align: center;color: black"><b>Stall unavailable</b></h6>
+
+                            </div>
+
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

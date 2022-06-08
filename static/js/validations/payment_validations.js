@@ -185,6 +185,10 @@ $(document).ready(function() {
     });
 
 
+    $('#test_btn').on('click', function() {
+        $('#paypal_pay_stall').show();
+    });
+
 
 
 
@@ -234,13 +238,6 @@ $(document).click(function() {
             // $("#acc_pwd_change_old_pwd_alert").hide()
             // document.getElementById("from_acc_reset_pwd_btn").disabled = false;
 
-
-
-
-
-
-
-
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alert("some error");
@@ -251,3 +248,4 @@ $(document).click(function() {
     });
 
 });
+

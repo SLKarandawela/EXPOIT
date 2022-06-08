@@ -28,23 +28,30 @@ def user_login_feature(request):
 
             if group == 'EXHIBITOR':
                 # messages.success(request, 'Welcome Back' + ' ' + str(request.user.username))
-                return redirect('create_exhibition')
+                return redirect('exhibitor_home')
 
             if group == 'VISITOR':
                 # messages.success(request, 'Welcome Back' + ' ' + str(request.user.username))
-                return redirect('all_exhibitions')
+                return redirect('visitor_home')
 
             if request.user.is_staff:
                 # messages.success(request, 'Welcome Back' + ' ' + str(request.user.username))
                 print(user_name)
                 print(user_password)
-                return redirect('admin-dashboard-display')
+                return redirect('create_exhibition')
 
             messages.success(request, 'Welcome Back')
 
         else:
             messages.error(request, 'username or password is incorrect')
     return render(request, 'exhibit_auth/sign_in.html')
+
+
+# logout
+def logout_user(request):
+    request.session.flush()
+    logout(request)
+    return redirect('exhibition_login')
 
 
 # exhibitor register view
@@ -58,7 +65,6 @@ def exhibitor_register_view(request):
         company_contact = request.POST.get('exhibitor_contact_number')
 
         print(company, company_address, company_contact)
-
 
         if User.objects.all().exists():
             last_system_user = User.objects.last()
@@ -76,7 +82,6 @@ def exhibitor_register_view(request):
         exhibitor_user.set_password(ex_password)
 
         print("This is test username", exhibitor_user.username)
-
 
         try:
             if Group.objects.filter(name='EXHIBITOR').exists():
@@ -109,4 +114,113 @@ def exhibitor_register_view(request):
 
 # visitor register view
 def visitor_register_view(request):
+    if request.method == 'POST':
+        vs_username = request.POST.get('visitor_username').strip()
+        vs_password = request.POST.get('visitor_register_password')
+        vs_mail = request.POST.get('visitor_register_email')
+        vs_fullname = request.POST.get('visitor_register_name')
+
+        print(vs_fullname, vs_mail, vs_username)
+
+        if User.objects.all().exists():
+            last_system_user = User.objects.last()
+            last_sys_id = last_system_user.id
+
+        else:
+            last_sys_id = 0
+
+        visitor_user = User.objects.create_user(
+            id=last_sys_id + 1,
+            username=vs_username,
+            email=vs_mail
+        )
+
+        visitor_user.set_password(vs_password)
+
+        print("This is test username", visitor_user.username)
+
+        try:
+            if Group.objects.filter(name='VISITOR').exists():
+                visitor_group = None
+                print('ok')
+            else:
+                print('not ok')
+                new_visitor_group = Group(name='VISITOR')
+                new_visitor_group.save()
+        except:
+            print('error')
+
+        visi_group = Group.objects.get(name='VISITOR')
+        visitor_user.groups.add(visi_group)
+        visitor_user.save()
+
+        new_visitor = Visitor(
+            visitor_user=visitor_user,
+            visitor_name=vs_fullname,
+        )
+
+        new_visitor.save()
+
+        # return redirect()
+
     return render(request, 'exhibit_auth/visitor_signup.html')
+
+
+# listing exhibitor user
+def exhibitor_users(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+    all_exhibitors = Exhibitor.objects.all()
+
+    context = {
+        "ALL_EXHIBITORS": all_exhibitors,
+        'LOGGED_GROUP': logged_group,
+    }
+
+    return render(request, 'exhibit_auth/all_exhibitors.html', context)
+
+
+# listing exhibitor user
+def visitor_users(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+    all_visitors = Visitor.objects.all()
+
+    context = {
+        "ALL_VISITORS": all_visitors,
+        'LOGGED_GROUP': logged_group,
+    }
+
+    return render(request, 'exhibit_auth/all_visitors.html', context)
+
+
+# visitor home page
+def visitor_home(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+    context = {
+
+        'LOGGED_GROUP': logged_group,
+    }
+    return render(request, 'exhibit_auth/visitor_home.html', context)
+
+
+# visitor home page
+def exhibitor_home(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+
+    context = {
+
+        'LOGGED_GROUP': logged_group,
+    }
+    print(logged_group)
+    return render(request, 'exhibit_auth/exhibitor_home.html', context)
