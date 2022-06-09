@@ -71,16 +71,16 @@ $(document).ready(function() {
 
         if(modal_availability === "True"){
             console.log("condition True")
-            $("#generate_model").hide()
+            $("#generate_model").show()
             $("#upload_model").show()
 
         }
-        else if(modal_availability === "False"){
-            console.log("condition false")
-            $("#generate_model").show()
-            $("#upload_model").hide()
-
-        }
+        // else if(modal_availability === "False"){
+        //     console.log("condition false")
+        //     $("#generate_model").show()
+        //     $("#upload_model").hide()
+        //
+        // }
 
         else {
             console.log("not a single option matched")

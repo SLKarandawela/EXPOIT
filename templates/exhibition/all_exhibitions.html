@@ -1,9 +1,9 @@
 {% extends 'layouts/dashboard.html' %}
 {% block page_title %}All Exhibitions{% endblock %}
 {% block sideNav %}
-      {% if LOGGED_GROUP == 'EXHIBITOR' %}
+    {% if LOGGED_GROUP == 'EXHIBITOR' %}
 
-            {% include 'components/exhibitor_sidenav.html' %}
+        {% include 'components/exhibitor_sidenav.html' %}
 
 
     {% elif LOGGED_GROUP == 'VISITOR' %}
@@ -12,7 +12,7 @@
 
 
     {% else%}
-            {% include 'components/admin_sidenav.html' %}
+        {% include 'components/admin_sidenav.html' %}
 
     {% endif %}
 {% endblock %}
@@ -39,20 +39,27 @@
             </thead>
             <tbody>
             {% for info in ALL_EXHIBITIONS %}
-            <tr>
+                <tr>
 
-                <td>{{ info.exhibition_name }}</td>
-                <td>{{ info.exhibition_category }}</td>
-                <td>{{ info.exhibition_start_date }}</td>
-                            <td>{{ info.exhibition_end_date }}</td>
-                <td>LKR:{{ info.exhibition_ticket_price|floatformat:2 }}</td>
-            <td>
-                <a href="{% url 'stall_list' info.id %}">
-                    <button type="button" class="btn btn-primary">View Stalls</button>
-                </a>
-            </td>
+                    <td>{{ info.exhibition_name }}</td>
+                    <td>{{ info.exhibition_category }}</td>
+                    <td>{{ info.exhibition_start_date }}</td>
+                    <td>{{ info.exhibition_end_date }}</td>
+                    <td>LKR:{{ info.exhibition_ticket_price|floatformat:2 }}</td>
+                    <td>
+                        {% if LOGGED_GROUP == 'EXHIBITOR' %}
+                        <a href="{% url 'stall_list' info.id %}">
+                            <button type="button" class="btn btn-primary">View Stalls</button>
+                        </a>
+                        {% elif LOGGED_GROUP == 'VISITOR'  %}
+                            <a href="">
+                                <button type="button" class="btn btn-primary">Explore</button>
+                            </a>
 
-            </tr>
+                        {% endif %}
+                    </td>
+
+                </tr>
 
             {% endfor %}
 
