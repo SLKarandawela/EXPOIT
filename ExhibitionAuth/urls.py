@@ -15,6 +15,7 @@ urlpatterns = [
 
     path('exhibitor_dashboard/', views.exhibitor_home, name="exhibitor_home"),
     path('visitor_dashboard/', views.visitor_home, name="visitor_home"),
+    path('admin_dashboard/', views.admin_home, name="admin_home"),
 
     path('logout/', views.logout_user, name="logout_user"),
 

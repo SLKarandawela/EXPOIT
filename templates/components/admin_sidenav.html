@@ -48,7 +48,7 @@
     {#    <div class="nav_wrapper">#}
     {#    home page#}
     <li class="list-group-item" id="list-group-item">
-        <a href="" class="nav_link_custom"><i class="fa-solid fa-house"></i> Home page</a>
+        <a href="{% url 'admin_home' %}" class="nav_link_custom"><i class="fa-solid fa-house"></i> Home page</a>
 
 
     </li>
@@ -89,10 +89,10 @@
                     <a href="{% url 'create_new_stall' %}" class="nav_link_custom"><i class="fa-solid fa-plus"></i> Create Stall</a>
 
                 </li>
-                <li class="list-group-item" id="list-group-item">
-                    <a href="" class="nav_link_custom"><i class="fa-solid fa-cubes"></i> Stall List</a>
-
-                </li>
+{#                <li class="list-group-item" id="list-group-item">#}
+{#                    <a href="" class="nav_link_custom"><i class="fa-solid fa-cubes"></i> Stall List</a>#}
+{##}
+{#                </li>#}
 
 
 
@@ -129,7 +129,7 @@
         <div class="collapse" id="collapseExample11">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" id="list-group-item">
-                    <a href="{% url 'payment_list' %}" class="nav_link_custom"><i class="fa-solid fa-wallet"></i>Payments Recieved</a>
+                    <a href="{% url 'payment_list' %}" class="nav_link_custom"><i class="fa-solid fa-wallet"></i>Payments Received</a>
 
                 </li>
             </ul>

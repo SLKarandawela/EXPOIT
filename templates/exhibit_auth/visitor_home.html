@@ -1,9 +1,10 @@
 {% extends 'layouts/dashboard.html' %}
 {% block page_title %}Visitor Home{% endblock %}
+{% load static %}
 {% block sideNav %}
- {% if LOGGED_GROUP == 'EXHIBITOR' %}
+    {% if LOGGED_GROUP == 'EXHIBITOR' %}
 
-            {% include 'components/exhibitor_sidenav.html' %}
+        {% include 'components/exhibitor_sidenav.html' %}
 
 
     {% elif LOGGED_GROUP == 'VISITOR' %}
@@ -12,7 +13,7 @@
 
 
     {% else%}
-            {% include 'components/admin_sidenav.html' %}
+        {% include 'components/admin_sidenav.html' %}
 
     {% endif %}{% endblock %}
 
@@ -21,6 +22,101 @@
     <div class="card body_card">
         <h5>Visitor Home</h5>
         <hr>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-7 body_card">
+                    <div class="card">
+                        <img src="{% static 'images/background/aaaa.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <a href="">
+                                <button type="button" class="btn btn-primary" style="width: 100%; height: 5em">Attend current event</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 body_card">
+                    <h5 class="card-title">Upcoming Events</h5>
+                    <br>
+
+                    {% for event in EVENTS %}
+
+                        <div class="card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ event.event_name }}</h5>
+                                <hr>
+
+                                <p>{{ event.event_desc }}</p>
+
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 style="font-size: 14px"><i class="fa-solid fa-calendar-day"></i> Start Date</h6>
+
+                                        <p style="font-size: 12px">{{ event.start }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <h6 style="font-size: 14px"><i class="fa-solid fa-calendar-day"></i> End Date</h6>
+
+                                        <p style="font-size: 12px">{{ event.end }}</p>
+
+                                    </div>
+                                </div>
+
+                                <div id="paypal-button-container"></div>
+
+                                <!-- Include the PayPal JavaScript SDK -->
+                                <script src="https://www.paypal.com/sdk/js?client-id=Aebj4mBPnWS8nXuf2vq9ix8OqvNurpQm7rrri17YzdeZPAvl04Tf_C5soL6GonOp26D-w8Bfm1gG4tqd&currency=USD"></script>
+
+
+                                <script>
+                                    // Render the PayPal button into #paypal-button-container
+                                    paypal.Buttons({
+
+                                        // Set up the transaction
+                                        createOrder: function(data, actions) {
+                                            return actions.order.create({
+                                                purchase_units: [{
+                                                    amount: {
+                                                        value: '100'
+                                                    }
+                                                }]
+                                            });
+                                        },
+
+                                        // Finalize the transaction
+                                        onApprove: function(data, actions) {
+                                            return actions.order.capture().then(function(orderData) {
+                                                // Successful capture! For demo purposes:
+                                                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                                                var transaction = orderData.purchase_units[0].payments.captures[0];
+                                                alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                                                // Replace the above to show a success message within this page, e.g.
+                                                // const element = document.getElementById('paypal-button-container');
+                                                // element.innerHTML = '';
+                                                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                                                // Or go to another URL:  actions.redirect('thank_you.html');
+                                            });
+                                        }
+
+
+                                    }).render('#paypal-button-container');
+                                </script>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
 
 
 

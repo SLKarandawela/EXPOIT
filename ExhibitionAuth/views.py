@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from ExhibitionAuth.models import *
+from Exhibition.models import *
 
 
 # Create your views here.
@@ -38,7 +39,7 @@ def user_login_feature(request):
                 # messages.success(request, 'Welcome Back' + ' ' + str(request.user.username))
                 print(user_name)
                 print(user_password)
-                return redirect('create_exhibition')
+                return redirect('admin_home')
 
             messages.success(request, 'Welcome Back')
 
@@ -204,9 +205,14 @@ def visitor_home(request):
         logged_group = request.user.groups.all()[0].name
     else:
         logged_group = "ADMIN"
+
+    all_events = Event.objects.all()
+
     context = {
 
         'LOGGED_GROUP': logged_group,
+        "EVENTS": all_events
+
     }
     return render(request, 'exhibit_auth/visitor_home.html', context)
 
@@ -218,9 +224,29 @@ def exhibitor_home(request):
     else:
         logged_group = "ADMIN"
 
+    all_events = Event.objects.all()
+
     context = {
 
         'LOGGED_GROUP': logged_group,
+        "EVENTS":all_events
     }
     print(logged_group)
     return render(request, 'exhibit_auth/exhibitor_home.html', context)
+
+
+def admin_home(request):
+    if not request.user.is_staff:
+        logged_group = request.user.groups.all()[0].name
+    else:
+        logged_group = "ADMIN"
+
+    all_events = Event.objects.all()
+
+    context = {
+
+        'LOGGED_GROUP': logged_group,
+        "EVENTS": all_events
+    }
+    print(logged_group)
+    return render(request, 'exhibit_auth/admin_home.html', context)

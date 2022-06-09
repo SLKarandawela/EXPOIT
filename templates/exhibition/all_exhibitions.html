@@ -48,12 +48,16 @@
                     <td>LKR:{{ info.exhibition_ticket_price|floatformat:2 }}</td>
                     <td>
                         {% if LOGGED_GROUP == 'EXHIBITOR' %}
-                        <a href="{% url 'stall_list' info.id %}">
-                            <button type="button" class="btn btn-primary">View Stalls</button>
-                        </a>
+                            <a href="{% url 'stall_list' info.id %}">
+                                <button type="button" class="btn btn-primary">View Stalls</button>
+                            </a>
                         {% elif LOGGED_GROUP == 'VISITOR'  %}
                             <a href="">
                                 <button type="button" class="btn btn-primary">Explore</button>
+                            </a>
+                        {% else %}
+                            <a href="{% url 'stall_list' info.id %}">
+                                <button type="button" class="btn btn-primary">View Stalls</button>
                             </a>
 
                         {% endif %}

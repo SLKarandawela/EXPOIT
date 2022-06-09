@@ -98,3 +98,9 @@ class StallPayments(models.Model):
 
     def __str__(self):
         return self.stall_payment_user.username 
+
+class Event(models.Model):
+    event_name = models.CharField(max_length=100, null=True)
+    event_desc = models.CharField(max_length=100, null=True)
+    start = models.DateField(null=True)
+    end = models.DateField(null=True)
