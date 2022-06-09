@@ -343,6 +343,11 @@ def calculate_stall_payment(request):
         tot += vcon_cost
         print("vcon Cost:", vcon_cost)
 
+    if  video_conf_count == "2":
+        vcon_cost = 0
+        tot += vcon_cost
+
+
     print("total Cost:", tot)
 
     print(banner_count, video_count, model_count, pdf_count, leaflet_count)
