@@ -26,6 +26,7 @@
         <form id="purchase_stall_form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="text" value="{{ STALL_ID }}" id="selected_stall" hidden>
+            <input type="text" value="{{ STALL_PRICE }}" id="selected_stall_price" hidden>
             <input type="text"  id="banner_payment" name="banner_total" hidden>
             <input type="text"  id="video_payment" name="video_total" hidden>
             <input type="text"  id="leaflet_payment" name="leaflet_total" hidden>
@@ -81,7 +82,9 @@
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label form_label_styler">Banner upload</label>
                         <input class="form-control" type="file" id="stall_banner" name="stall_banner" multiple>
-                        <h6 class="error_msg" id="banner_error">*Image Limit Exceeded</h6>
+                        <h6 class="error_msg" id="banner_error">*Uploaded image Limit Not matched with selected limit</h6>
+{#                        <h6 class="error_msg" id="banner_error_min">*Uploaded less the image Limit </h6>#}
+
                     </div>
                 </div>
             </div>
@@ -109,7 +112,7 @@
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label form_label_styler">Video upload</label>
                         <input class="form-control" type="file" id="stall_video" name="stall_video" multiple>
-                        <h6 class="error_msg" id="video_error">*Video Limit Exceeded</h6>
+                        <h6 class="error_msg" id="video_error">*Uploaded Video Limit not matched with selected limit</h6>
 
                     </div>
                 </div>
@@ -189,7 +192,7 @@
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label form_label_styler">Leaflet upload</label>
                         <input class="form-control" type="file" id="stall_leaflet" name="stall_leaflet" multiple>
-                        <h6 class="error_msg" id="leaflet_error">*Leaflet limit exceeded</h6>
+                        <h6 class="error_msg" id="leaflet_error">* Uploaded Leaflet limit not matched with selected limit</h6>
                     </div>
                 </div>
             </div>

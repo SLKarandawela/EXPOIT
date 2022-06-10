@@ -241,12 +241,23 @@ def admin_home(request):
     else:
         logged_group = "ADMIN"
 
+    try:
+        all_pdf = StallPdf.objects.all().count()
+        all_banner = StallBanner.objects.all().count()
+        all_leaflet = StallLeaflet.objects.all().count()
+
+    except:
+        print("not found")
+
     all_events = Event.objects.all()
 
     context = {
 
         'LOGGED_GROUP': logged_group,
-        "EVENTS": all_events
+        "EVENTS": all_events,
+        "PDF":all_pdf,
+        "BANNER":all_banner,
+        "LEAFLET":all_leaflet
     }
     print(logged_group)
     return render(request, 'exhibit_auth/admin_home.html', context)

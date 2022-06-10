@@ -128,6 +128,7 @@ def all_stalls(request, pk):
     }
     return render(request, 'exhibition/all_stalls.html', context)
 
+
 def my_stalls(request):
     if not request.user.is_staff:
         logged_group = request.user.groups.all()[0].name
@@ -185,6 +186,7 @@ def purchase_stall(request, pk):
 
     try:
         purchasing_stall = ExhibitionStall.objects.get(id=pk)
+        purchased_stall_price = purchasing_stall.stall_price
     except:
         print("searched_stall_not_found")
 
@@ -284,10 +286,9 @@ def purchase_stall(request, pk):
 
             new_stall_model.save()
 
-
-
     context = {
         "STALL_ID": purchasing_stall.id,
+        "STALL_PRICE": purchased_stall_price,
         'LOGGED_GROUP': logged_group,
 
     }
@@ -302,6 +303,9 @@ def calculate_stall_payment(request):
     leaflet_cost = None
     vcon_cost = None
     stall_id_ajax = request.GET.get('stall_id')
+    stall_price_ajax = request.GET.get('stall_amount')
+    print("stall booking price", stall_price_ajax)
+
     print("Stall id from ajax", stall_id_ajax)
 
     banner_count = request.GET.get('no_of_banners')
@@ -311,6 +315,14 @@ def calculate_stall_payment(request):
     leaflet_count = request.GET.get('no_of_leaflets')
     video_conf_count = request.GET.get('video_con')
     tot = 0
+
+    try:
+        if stall_price_ajax:
+            stall_row_price = int(float(stall_price_ajax))
+            tot += stall_row_price
+            print("total store price", tot)
+    except:
+        print('dsada')
 
     if banner_count:
         banner_cost = 10 * int(banner_count)
@@ -343,10 +355,9 @@ def calculate_stall_payment(request):
         tot += vcon_cost
         print("vcon Cost:", vcon_cost)
 
-    if  video_conf_count == "2":
+    if video_conf_count == "2":
         vcon_cost = 0
         tot += vcon_cost
-
 
     print("total Cost:", tot)
 

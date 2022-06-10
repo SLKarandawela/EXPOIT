@@ -6,6 +6,8 @@ $(document).ready(function() {
     $("#upload_model").hide()
     $("#leaflet_error").hide()
     $("#infoemation_sheet_av").hide()
+    // $("#banner_error_min").hide()
+
 
 
 
@@ -31,7 +33,9 @@ $(document).ready(function() {
         if(image_limit < image_count){
             console.log('Image limit exceeded')
             $("#banner_error").show()
-
+        }
+        else if(image_limit > image_count){
+            $("#banner_error").show()
         }
         else {
             $("#banner_error").hide()
@@ -54,6 +58,11 @@ $(document).ready(function() {
 
 
         if(video_limit < video_count){
+            console.log('Image limit exceeded')
+            $("#video_error").show()
+
+        }
+        else if(video_limit > video_count){
             console.log('Image limit exceeded')
             $("#video_error").show()
 
@@ -101,6 +110,10 @@ $(document).ready(function() {
         console.log("this is leaflet count",leaflet_count)
 
         if(leaflet_count > leaflet_limit){
+            console.log('leaflet limit exceeded')
+            $("#leaflet_error").show()
+        }
+        else if(leaflet_count < leaflet_limit){
             console.log('leaflet limit exceeded')
             $("#leaflet_error").show()
         }
@@ -208,6 +221,8 @@ $(document).click(function() {
     const leaflet_limit_be = $("input[name='leafletOptions']:checked").val();
     const info_sheet_be = $("input[name='informationSheetAvailableOptions']:checked").val();
     const video_con_be = $("input[name='videoConferencingAvailableOptions']:checked").val();
+    const purchased_price = document.getElementById("selected_stall_price").value
+
 
     console.log("to backend image count", image_limit_be)
     $.ajax({
@@ -219,7 +234,9 @@ $(document).click(function() {
             'models':modal_availability_be,
             'pdf':info_sheet_be,
             'no_of_leaflets':leaflet_limit_be,
-            'video_con': video_con_be
+            'video_con': video_con_be,
+            'stall_amount':purchased_price
+
         },
         dataType: 'json',
         success: function (data) {
@@ -238,7 +255,7 @@ $(document).click(function() {
 
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("some error");
+            console.log("some error");
         }
 
 
